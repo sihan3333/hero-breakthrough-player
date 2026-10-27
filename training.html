@@ -1,12 +1,27 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101c26"><meta name="description" content="公孙离对线信息判断的原创情境练习：先作判断、比较思路、换新情境，再带一项任务进入实战。"><title>情境练习 · 英雄突破</title><link rel="stylesheet" href="play.css"><link rel="stylesheet" href="training.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0e1722"><meta name="description" content="直接观察王者荣耀真实游戏画面，在图上标记依据，留下自己的行动判断，再回到实战核对。"><title>真实画面练习 · 英雄突破</title><link rel="stylesheet" href="scene-review.css"></head>
 <body>
-  <a href="#workspace" class="skip-link">跳到训练内容</a>
-  <header class="topbar"><a class="brand" href="training.html"><span>✦</span> 英雄突破 <small>训练单元 01</small></a><nav aria-label="主导航"><button type="button" class="quiet" id="training-history">训练记录 <span id="history-count">0</span></button><a href="play.html">我的复盘 ↗</a></nav></header>
-  <main class="app-layout">
-    <aside class="left-rail"><div class="rail-label">看见信息，再决定行动</div><ol class="step-list" id="training-steps"><li data-stage="baseline"><span>01</span><div>先试一试<small>先留下自己的判断</small></div></li><li data-stage="practice"><span>02</span><div>边学边练<small>比较信息与依据</small></div></li><li data-stage="transfer"><span>03</span><div>换一个情境<small>用新题再想一次</small></div></li><li data-stage="fieldwork"><span>04</span><div>带进下一局<small>保存一项实战任务</small></div></li></ol><div class="rail-art"><img src="assets/gongsunli-hero.png" alt="公孙离撑伞的角色插画"><div><span>NOTICE. REASON. ACT.</span><p>看清这一刻。<br>想好下一步。</p></div></div><p class="rail-note">原创情境演示 · 非真实回放</p></aside>
-    <section class="workspace" id="workspace" aria-label="情境训练"><div class="workspace-top"><div><span class="eyebrow">TRAINING 01 / 对线信息判断</span><h1 id="page-title" tabindex="-1">交手前，先把局面看清楚。</h1></div><span class="mode-badge" id="training-mode">原创情境演示</span></div><div class="notice" id="content-notice">当前为原创情境演示，未经过玩家审核，不进行正式评分，也不代表实战训练效果。</div><div class="notice" id="storage-warning" role="status" hidden></div><div id="toast" class="toast" role="status" hidden></div><div id="screen"></div><footer class="workspace-footer"><span id="save-status">记录仅保存在当前浏览器</span><a href="index.html">项目介绍 ↗</a></footer></section>
-    <aside class="history-panel" id="history-panel" aria-label="训练历史" hidden><div class="panel-heading"><h2>训练记录</h2><button type="button" class="quiet" id="close-history">关闭 ×</button></div><p class="muted">首次作答和重复练习分别保留。仅保存最近 30 次单元记录，不会自动上传。</p><div id="history-list"></div><button type="button" class="danger" id="clear-training">仅清除本机训练记录</button></aside>
-  </main><noscript>请启用 JavaScript 体验训练。此页不要求登录或提供 API 密钥。</noscript><script type="module" src="training.mjs"></script>
+<a class="skip-link" href="#decision-panel">跳到作答</a>
+<header class="scene-header"><a href="training.html" class="scene-brand"><span>✦</span> 英雄突破 <small>王者荣耀 · 画面练习</small></a><nav aria-label="主导航"><button id="history-open" type="button">我的记录 <span id="record-count">0</span></button><a href="play.html">对局复盘 ↗</a></nav></header>
+<main class="scene-app">
+<div class="scene-heading"><div><p class="eyebrow">OBSERVE / DECIDE / REVIEW</p><h1 id="page-title" tabindex="-1">这一刻，你会怎么做？</h1></div><div class="heading-actions"><button id="new-scene" class="secondary" type="button">新练习</button><button id="choose-image" class="secondary" type="button">换成我的截图</button><input type="file" id="image-input" accept="image/jpeg,image/png,image/webp" hidden></div></div>
+<div id="storage-warning" class="notice" role="status" hidden></div><div id="status" class="status" role="status" aria-live="polite" hidden></div>
+<div class="scene-layout">
+<section class="game-column" aria-label="真实游戏画面">
+<div class="frame-bar"><span id="frame-label">公孙离 · 画面观察 01</span><button type="button" id="zoom-open">放大查看 ↗</button></div>
+<div class="game-frame" id="game-frame"><img id="game-image" alt="王者荣耀公孙离真实游戏截图，保留小地图、角色血条、防御塔和技能界面"><div id="marker-layer" class="marker-layer" aria-hidden="true"></div><div id="zone-layer" class="marker-layer" aria-hidden="true"></div></div>
+<div id="missing-image" class="missing-image" hidden><p>原截图暂时无法读取，请重新选择同一张图片；你的判断记录仍然保留。</p><button type="button" id="restore-image" class="secondary">重新选择原截图</button></div>
+<div class="frame-tools"><p id="mark-hint">可在画面上点出你关注的位置，最多 3 处。</p><button id="undo-marker" type="button">撤销一个标记</button></div>
+<div id="observation-tools" class="observation-tools" hidden></div>
+<p class="frame-source" id="frame-source"></p>
+<details class="method-note"><summary>练习方式与资料来源</summary><p>先独立看图、选择行动并写下理由，提交后再对照观察点。图片来自公开教程，页面不提供当前版本的战术标准答案。自己的截图只在本浏览器读取和保存，不发送给服务器或 AI。</p></details>
+</section>
+<section id="decision-panel" class="decision-panel" aria-label="行动判断"></section>
+</div>
+<footer class="scene-footer"><span id="save-status">判断只保存在当前浏览器</span><a href="training-archive.html">旧版训练记录</a><a href="index.html">项目介绍 ↗</a></footer>
+</main>
+<dialog id="zoom-dialog" class="zoom-dialog"><div class="zoom-header"><span>查看完整游戏画面</span><div><button id="zoom-scale" type="button">放大 2 倍</button><button id="zoom-close" type="button">关闭 ×</button></div></div><div class="zoom-scroll"><div class="zoom-image-wrap" id="zoom-wrap"><img id="zoom-image" alt="放大的王者荣耀游戏截图"><div id="zoom-markers" class="marker-layer" aria-hidden="true"></div></div></div><p>可以横向移动查看。作答前仍可在这里点图标记。</p></dialog>
+<aside id="history-panel" class="history-panel" aria-label="画面练习记录" hidden><div class="history-heading"><h2>画面练习记录</h2><button id="history-close" type="button">关闭 ×</button></div><p>首次判断、复盘补充和实战反馈分别保存。</p><div id="history-list"></div><button id="clear-history" class="danger" type="button">清除本机画面练习记录</button></aside>
+<noscript>请启用 JavaScript 使用画面练习。</noscript><script type="module" src="scene-review.mjs"></script>
 </body></html>
