@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101924"><meta name="description" content="从一次公孙离对线出发，确认事实，带走下一局的一项行动，并记录练习反馈。">
+  <title>开始我的复盘 · 英雄突破</title><link rel="stylesheet" href="play.css">
+</head>
+<body>
+  <a href="#workspace" class="skip-link">跳到复盘</a>
+  <header class="topbar"><a class="brand" href="play.html"><span>✦</span> 英雄突破 <small>公孙离 · 前期对线</small></a><nav aria-label="主导航"><button id="history-toggle" class="quiet" type="button">我的记录 <span id="history-count">0</span></button><a href="index.html">项目介绍 ↗</a></nav></header>
+  <main class="app-layout">
+    <aside class="left-rail">
+      <div class="rail-label">你的进步，从一个片段开始</div>
+      <ol class="step-list" id="steps"><li data-stage="review"><span>01</span><div>理清这一局<small>描述经历 · 确认事实</small></div></li><li data-stage="result"><span>02</span><div>带走一个行动<small>知道下一局观察什么</small></div></li><li data-stage="practice"><span>03</span><div>练完回来看看<small>记录变化 · 继续复盘</small></div></li></ol>
+      <div class="rail-art"><img src="assets/gongsunli-hero.png" alt="公孙离撑伞的角色插画"><div><span>ONE STEP AT A TIME</span><p>先练一件事。<br>把进步看清楚。</p></div></div>
+      <p class="rail-note">个人产品试用版 · 与游戏官方无关联</p>
+    </aside>
+    <section id="workspace" class="workspace" aria-label="我的复盘">
+      <div class="workspace-top"><div><span class="eyebrow">LANING REVIEW / 对线复盘</span><h1 id="page-title">把“打不过”，说具体一点。</h1></div><span class="mode-badge" id="mode-badge">引导复盘</span></div>
+      <div id="storage-warning" class="notice" role="status" hidden></div>
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+      <div id="screen"></div>
+      <footer class="workspace-footer"><span id="save-status">记录保存在当前浏览器</span><span>一次复盘，一项行动。</span></footer>
+    </section>
+    <aside id="history-panel" class="history-panel" aria-label="历史复盘" hidden><div class="panel-heading"><h2>我的复盘记录</h2><button id="history-close" type="button" class="quiet">关闭 ×</button></div><p class="muted">仅保存在当前设备的这个浏览器。不会自动共享给项目作者。</p><div id="history-list"></div><button id="clear-history" class="danger" type="button">清除本机全部记录</button></aside>
+  </main>
+  <noscript>请启用 JavaScript 使用复盘。此产品需要在浏览器中运行。</noscript>
+  <script type="module" src="play.mjs"></script>
+</body>
+</html>
