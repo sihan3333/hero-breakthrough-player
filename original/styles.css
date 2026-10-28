@@ -1786,3 +1786,10 @@ html[data-theme="light"] body:has(.home-screen) .coming-hero small { color: #8d8
   body:has(.home-screen) .module-title { flex-wrap: wrap; }
   body:has(.home-screen) .module-title small { width: 100%; margin-left: 34px; }
 }
+
+/* Let saved tasks extend the desktop hero instead of sitting under the cards. */
+@media (min-width: 1200px) {
+  body:has(.home-screen) .hero:has(.saved-task-entry:not(:empty)) {
+    height: auto;
+  }
+}
