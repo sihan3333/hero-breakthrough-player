@@ -46,10 +46,6 @@ const questions = {
     text: "回想最近一次前期打不过：最先发生的是被换血打掉很多血、漏兵，还是打起来之前就已经落后？记不清也可以直接说。",
     suggestions: ["换血先亏了，后来开始漏兵", "打起来前已经比对面穷", "我记不清具体过程"],
   },
-  conditions: {
-    text: "你刚才说的情况，发生在双方人数和经济接近、网络正常的时候吗？还是当时已经有人数、经济或卡顿方面的不利条件？",
-    suggestions: ["当时一对一，经济差不多，网络正常", "当时对面两个人，我只有一个人", "出问题前我已经明显经济落后"],
-  },
   recognition: {
     text: "就刚才那次对线，你能说出对手哪个技能最需要留意，以及它会怎样影响你靠近兵线吗？说不出来也没关系。",
     suggestions: ["我不知道对手哪个技能最危险", "知道技能，但不知道该怎样调整打法", "我知道要注意什么，也能解释当时该怎么做"],
@@ -77,6 +73,21 @@ const questions = {
   other_cause: {
     text: "目前的描述暂时不支持对位知识或执行是主要问题。那一波之前，你有没有漏整波兵、离线支援，或者发现经济与装备已经不同？",
     suggestions: ["我在交手前已经漏了兵线", "当时经济差不多，操作也做到了", "我需要回看那一段才知道"],
+  },
+};
+
+const conditionQuestions = {
+  economy: {
+    text: "开始觉得打不过之前，双方经济大致相当，还是你已经明显落后？记不清也可以直接说。",
+    suggestions: ["当时双方经济差不多", "出问题前我已经明显经济落后", "我记不清当时的经济"],
+  },
+  numbers: {
+    text: "那次对线时，双方参与的人数一样多，还是你这边更少？记不清也可以直接说。",
+    suggestions: ["当时双方参与对线的人数一样多", "当时我这边的人数更少", "我记不清当时的人数"],
+  },
+  network: {
+    text: "出现这个情况时，网络和设备是否正常，有没有明显卡顿或延迟？记不清也可以直接说。",
+    suggestions: ["当时网络和设备都正常", "当时有明显卡顿或延迟", "我记不清当时有没有卡顿"],
   },
 };
 
@@ -167,7 +178,11 @@ export function evaluateTurn({ messages = [], observations = [], finish = false 
     interpretation = collections[id].reason;
     return output("collect", null, { ...collections[id] });
   };
-  const ask = (id) => finish || turnCount >= 6 ? collect("insufficient") : output("question", { id, ...questions[id] });
+  const ask = (id, question = questions[id]) => finish || turnCount >= 6 ? collect("insufficient") : output("question", { id, ...question });
+  const askConditions = (requiredFields) => {
+    const field = requiredFields.find((key) => !known(key));
+    return field ? ask("conditions", { field, ...conditionQuestions[field] }) : collect("insufficient");
+  };
   const train = (id) => {
     hypotheses.find((h) => h.id === id).level = "较强证据（自述）";
     interpretation = actions[id].reason;
@@ -201,9 +216,12 @@ export function evaluateTurn({ messages = [], observations = [], finish = false 
         : knowledgeSupport
           ? "你提到对手的关键信息或出手条件还不清楚，这支持继续调查对位理解。先核对当时的局面，避免把人数或经济劣势误判成个人能力问题。"
           : "这条回答支持继续调查，但还不能排除当时经济、人数或设备条件的影响。";
-      return ask("conditions");
+      // Check one unknown at a time. An economy gap can require an earlier-event
+      // review, so resolve it before the remaining context questions.
+      return askConditions(["economy", "numbers", "network"]);
     }
-    if (has("last_hit", "fails") && !known("network")) return ask("conditions");
+    // Uncontested last-hit failures only require a device/network context check.
+    if (has("last_hit", "fails") && !known("network")) return askConditions(["network"]);
     if (!repeated) {
       interpretation = "现在有了具体行为和当时条件的线索。还需要确认这是反复出现的模式，还是某一次、某个对手带来的困难，再决定下一局优先练什么。";
       return ask("recurrence");
